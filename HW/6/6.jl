@@ -10,12 +10,15 @@ function draw!(robot)
     for _j in 1:num_West1
         move!(robot, West)
     end
-    for _k in 1:num_Nord1
+    while num_Nord1 != 0
         move!(robot, Nord)
+        num_Nord1 -= 1
     end
-    for _t in 1:num_Ost1
+    while num_Ost1 != 0
         move!(robot, Ost)
+        num_Ost1 -= 1
     end
+    return num_Nord1, num_Ost1
 end
 function to_corner(robot)
     num_West = 0

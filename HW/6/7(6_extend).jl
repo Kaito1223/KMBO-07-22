@@ -1,6 +1,8 @@
 using HorizonSideRobots
 function draw!(robot)
     num_Nord1, num_Ost1 = to_corner(robot)
+    num_Nord2, num_Ost2 = num_Nord1, num_Ost1
+    num_Nord3, num_Ost3 = num_Nord1, num_Ost1
     draw_perimeter!(robot)
     num_West1, num_Sud1= draw_around!(robot)
     for _i in 1:num_Sud1
@@ -10,10 +12,25 @@ function draw!(robot)
         move!(robot, West)
     end
     for _k in 1:num_Nord1
-        move!(robot, Nord)
+        if !isborder(robot, Nord)
+            move!(robot, Nord)
+            num_Nord2 -= 1
+        end
     end
     for _t in 1:num_Ost1
-        move!(robot, Ost)
+        if !isborder(robot, Ost)
+            move!(robot, Ost)
+            num_Ost2 -= 1
+        end
+    end
+    if num_Nord2 != 0 || num_Ost2 != 0
+        to_corner(robot)
+        for _i in 1:num_Ost3
+            move!(robot, Ost)
+        end
+        for _j in 1:num_Nord3
+            move!(robot, Nord)
+        end
     end
 end
 function to_corner(robot)
